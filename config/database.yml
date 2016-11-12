@@ -23,14 +23,14 @@ default: &default
 
 development:
   <<: *default
-  database: test-auth-app_development
+  database: finance-fitness_development
 
 test:
   <<: *default
-  database: test-auth-app_test
+  database: finance-fitness_test
 
 production:
   <<: *default
-  database: test-auth-app_production
-  username: test-auth-app
-  password: <%= ENV['TEST-AUTH_DATABASE_PASSWORD'] %>
+  database: finance-fitness_production
+  username: finance-fitness
+  password: <%= ENV['FINANCE_FITNESS_DATABASE_PASSWORD'] %>
