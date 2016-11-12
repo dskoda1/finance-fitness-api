@@ -1,0 +1,9 @@
+language: ruby
+
+rvm:
+    - 2.3.0
+env:
+    - RAILS_ENV=test
+before_script:
+    - bundle exec rails db:reset
+    - bundle exec rails db:migrate
