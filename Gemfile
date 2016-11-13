@@ -36,3 +36,8 @@ gem 'jwt'
 gem 'simple_command'
 
 gem 'active_model_serializers', '~> 0.10.0'
+
+# Development gems
+gem 'faker', :require => false
+gem 'pry', group: [:development, :test]
+gem 'pry-byebug', group: [:development, :test]

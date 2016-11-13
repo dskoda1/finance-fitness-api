@@ -19,7 +19,7 @@ class RegistrationControllerTest < ActionDispatch::IntegrationTest
     }
     post '/register', params: params
     assert_response :success
-    
+
     post '/register', params: params
     assert_response :unprocessable_entity
   end

@@ -2,8 +2,8 @@
 
 one:
   name: Bill
-  email: MyString
-  password_digest: MyString
+  email: bill@yahoo.com
+  password_digest: password_fifty_five
 
 two:
   name: John
