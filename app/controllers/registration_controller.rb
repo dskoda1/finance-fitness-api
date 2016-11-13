@@ -1,6 +1,7 @@
 class RegistrationController < ApplicationController
   skip_before_action :authenticate_request
   rescue_from ActiveRecord::RecordInvalid, with: :email_taken
+  
   def register
     user = User.create!(email:                  params[:email],
                         name:                   params[:name],

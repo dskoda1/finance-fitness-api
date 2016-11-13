@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class ApplicationControllerTest < ActionDispatch::IntegrationTest
-
-
   test "Authentication failure with no password" do
     post '/authenticate', params: {email: 'david'}
     assert_response :unauthorized

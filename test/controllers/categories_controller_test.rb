@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class CategoriesControllerTest < ActionDispatch::IntegrationTest
+
   setup do
     @category = categories(:one)
     email = 'some_email@provider.com'
@@ -11,7 +12,6 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
         password_confirmation: password
       })
     assert @user.persisted?
-
     post '/authenticate', params: {
       email: email,
       password: password
@@ -19,6 +19,11 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     token = JSON.parse(response.body)['auth_token']
     @header = {'Authorization': token}
+  end
+
+  test "should fail if passed bad header" do
+    get categories_url
+    assert_response :unauthorized
   end
 
   test "should get index" do
@@ -32,8 +37,20 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
       params: { category: { name: 'a new category', user_id: @category.user_id } },
       headers: @header
     end
-
     assert_response 201
+  end
+  test "should create second category same name fail" do
+    assert_difference('Category.count') do
+      post categories_url,
+      params: { category: { name: 'a new category', user_id: @category.user_id } },
+      headers: @header
+    end
+    assert_response 201
+    # Second one
+    post categories_url,
+    params: { category: { name: 'a new category', user_id: @category.user_id } },
+    headers: @header
+    assert_response 422
   end
 
   test "should show category" do
@@ -44,6 +61,12 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   test "should update category" do
     patch category_url(@category),
       params: { category: { name: @category.name, user_id: @category.user_id } },
+      headers: @header
+    assert_response 200
+  end
+  test "update should fail category" do
+    patch category_url(@category),
+      params: { category: { name: @category.name } },
       headers: @header
     assert_response 200
   end
