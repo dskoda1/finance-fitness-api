@@ -1,10 +1,13 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :update, :destroy]
+  jsonapi { }
+
 
   # GET /categories
   def index
-    @categories = Category.all
-    render json: @categories
+    #binding.pry
+    #render_ams(CategoryResource.records)
+    render json: Category.all
   end
 
   # GET /categories/1

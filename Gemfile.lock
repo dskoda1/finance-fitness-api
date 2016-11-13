@@ -69,6 +69,16 @@ GEM
       jsonapi-renderer (= 0.1.1.beta1)
     jsonapi-parser (0.1.1.beta3)
     jsonapi-renderer (0.1.1.beta1)
+    jsonapi-resources (0.8.1)
+      concurrent-ruby
+      rails (>= 4.0)
+    jsonapi_ams_extensions (0.1.1)
+      active_model_serializers (~> 0.10.x)
+    jsonapi_compliable (0.3.5)
+      active_model_serializers (~> 0.10)
+      jsonapi (~> 0.1.1.beta2)
+      jsonapi_ams_extensions (~> 0.1)
+      rails (>= 4.1, < 6)
     jwt (1.5.4)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
@@ -164,6 +174,8 @@ DEPENDENCIES
   byebug
   coveralls
   faker
+  jsonapi-resources
+  jsonapi_compliable
   jwt
   pg (~> 0.18)
   pry
