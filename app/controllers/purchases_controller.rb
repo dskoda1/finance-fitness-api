@@ -15,7 +15,10 @@ class PurchasesController < ApplicationController
 
   # POST /purchases
   def create
-    @purchase = Purchase.new(purchase_params)
+    @purchase = Purchase.new(
+      title: purchase_params[:title],
+      category_id: purchase_params[:category_id],
+      price: purchase_params[:price])
 
     if @purchase.save
       render json: @purchase, status: :created, location: @purchase
@@ -26,7 +29,10 @@ class PurchasesController < ApplicationController
 
   # PATCH/PUT /purchases/1
   def update
-    if @purchase.update(purchase_params)
+    if @purchase.update(
+      title: purchase_params[:title],
+      category_id: purchase_params[:category_id],
+      price: purchase_params[:price])
       render json: @purchase
     else
       render json: @purchase.errors, status: :unprocessable_entity
@@ -41,11 +47,18 @@ class PurchasesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_purchase
+      #@purchase = Purchase.find(params[:attributes][])
+
+
       @purchase = Purchase.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
     def purchase_params
-      params.require(:purchase).permit(:category_id, :price)
+      params
+        .require(:data)
+          .require(:attributes)
+            .permit(:title, :price, :category_id)
+      #params.require(:purchase).permit(:category_id, :price)
     end
 end

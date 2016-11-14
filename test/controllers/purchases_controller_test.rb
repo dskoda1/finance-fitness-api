@@ -16,7 +16,13 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
   test "should create purchase" do
     assert_difference('Purchase.count') do
       post purchases_url,
-        params: { purchase: { category_id: @purchase.category_id, price: @purchase.price } },
+        params: {
+          data:{
+            attributes: {
+              category_id: @purchase.category_id,
+              price: @purchase.price },
+              type: 'purchase'}
+            },
         headers: @header
     end
 
@@ -30,7 +36,13 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
 
   test "should update purchase" do
     patch purchase_url(@purchase),
-    params: { purchase: { category_id: @purchase.category_id, price: @purchase.price } },
+    params: {
+      data:{
+        attributes: {
+          category_id: @purchase.category_id,
+          price: @purchase.price },
+        type: 'purchase'}
+      },
     headers: @header
     assert_response 200
   end
