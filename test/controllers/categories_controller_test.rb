@@ -1,24 +1,10 @@
 require 'test_helper'
 
 class CategoriesControllerTest < ActionDispatch::IntegrationTest
-
   setup do
-    @category = categories(:one)
-    email = 'some_email@provider.com'
-    password = 'password123'
-    @user = User.create({
-        email: email,
-        password: password,
-        password_confirmation: password
-      })
-    assert @user.persisted?
-    post '/authenticate', params: {
-      email: email,
-      password: password
-    }
-    assert_response :success
-    token = JSON.parse(response.body)['auth_token']
-    @header = {'Authorization': token}
+    @user = create_user
+    @header = get_auth_header(@user)
+    @category = create_category(@user)
   end
 
   test "should fail if passed bad header" do
@@ -29,6 +15,23 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   test "should get index" do
     get categories_url, headers: @header
     assert_response :success
+  end
+
+  test "should only get current user's categories" do
+    get categories_url, headers: @header
+    assert_response :success
+    other_user = User.create(
+      email: 'OtherUser',
+      password: 'pw',
+      password_confirmation: 'pw')
+    assert other_user.persisted?
+
+    cats = JSON.parse(response.body)
+    cats.each { |cat|
+      assert_equal cat['user']['id'], @user.id
+      #assert_not_equal cat['user']['id'], @other_user.id
+    }
+
   end
 
   test "should create category" do
@@ -56,6 +59,23 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   test "should show category" do
     get category_url(@category), headers: @header
     assert_response :success
+  end
+
+  test "should not show other users category" do
+    # create another user and try and find one of their categories
+    params = {
+      email: 'david_username',
+      password: 123,
+      password_confirmation: 123
+    }
+    post '/register', params: params
+    assert_response :success
+    u = User.where(email: params[:email]).first
+    c = Category.create(name: 'another category', user_id: u.id)
+    assert c.persisted?
+
+    get category_url(c.id), headers: @header
+    assert_response :unauthorized
   end
 
   test "should update category" do

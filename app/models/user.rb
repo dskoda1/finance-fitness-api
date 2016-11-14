@@ -1,10 +1,8 @@
-
-
-
 class User < ApplicationRecord
   has_secure_password
   validates_uniqueness_of :email
-  has_many :categories
+  has_many :categories, dependent: :destroy
+
   def default_categories
     return  [
       [ "Food" ],

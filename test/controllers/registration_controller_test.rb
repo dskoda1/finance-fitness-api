@@ -3,7 +3,7 @@ require 'test_helper'
 class RegistrationControllerTest < ActionDispatch::IntegrationTest
   test "should get register:post" do
     params = {
-      name: 'david',
+      email: 'david',
       password: 123,
       password_confirmation: 123
     }
@@ -13,7 +13,7 @@ class RegistrationControllerTest < ActionDispatch::IntegrationTest
 
   test 'create another should return 422' do
     params = {
-      name: 'david',
+      email: 'david',
       password: 123,
       password_confirmation: 123
     }

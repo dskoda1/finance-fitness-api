@@ -7,12 +7,17 @@ class CategoriesController < ApplicationController
   def index
     #binding.pry
     #render_ams(CategoryResource.records)
-    render json: Category.all
+    render json: Category.where(user_id: current_user.id)
   end
 
   # GET /categories/1
   def show
-    render json: @category
+    category = @category
+    if category.user_id.eql?(current_user.id)
+      render json: @category, status: 200
+    else
+      render json: { error: 'Not Authorized' }, status: :unauthorized
+    end
   end
 
   # POST /categories
