@@ -5,7 +5,6 @@ class CategoriesController < ApplicationController
 
   # GET /categories
   def index
-    #binding.pry
     #render_ams(CategoryResource.records)
     render json: Category.where(user_id: current_user.id)
   end
@@ -53,6 +52,8 @@ class CategoriesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def category_params
-      params.require(:category).permit(:name, :user_id)
+      params
+        .require(:category)
+          .permit(:name, :user_id)
     end
 end

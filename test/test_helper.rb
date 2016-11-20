@@ -45,11 +45,17 @@ class ActiveSupport::TestCase
     assert category.persisted?
     return category
   end
-  def create_purchase(category)
-    purchase = Purchase.create!(title: 'new_category',
+  def create_purchase(category, purchase_name)
+    purchase = Purchase.create!(purchase_name_id: purchase_name.id,
                                 category_id: category.id,
                                 price: '43.50')
     assert purchase.persisted?
     return purchase
+  end
+  def create_purchase_name(user)
+    pname = PurchaseName.create!(text: "deli",
+                                 user_id: user.id)
+    assert pname.persisted?
+    return pname
   end
 end

@@ -5,7 +5,8 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
     @user = create_user
     @header = get_auth_header(@user)
     @category = create_category(@user)
-    @purchase = create_purchase(@category)
+    @purchase_name = create_purchase_name(@user)
+    @purchase = create_purchase(@category, @purchase_name)
   end
 
   test "should get index" do
@@ -19,7 +20,8 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
         params: {
           data:{
             attributes: {
-              category_id: @purchase.category_id,
+              category_id: @category.id,
+              purchase_name_id: @purchase_name.id,
               price: @purchase.price },
               type: 'purchase'}
             },
@@ -40,6 +42,7 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
       data:{
         attributes: {
           category_id: @purchase.category_id,
+          purchase_name_id: @purchase_name.id,
           price: @purchase.price },
         type: 'purchase'}
       },

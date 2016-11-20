@@ -3,10 +3,6 @@ class ApplicationController < ActionController::API
   include JsonapiCompliable
 
   attr_reader :current_user
-  def context
-    {current_user: current_user}
-  end
-  # helper_method :current_user
 
   private
 

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :purchase_names
   get 'users/me'
 
   resources :purchases

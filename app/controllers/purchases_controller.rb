@@ -16,7 +16,7 @@ class PurchasesController < ApplicationController
   # POST /purchases
   def create
     @purchase = Purchase.new(
-      title: purchase_params[:title],
+      purchase_name_id: purchase_params[:purchase_name_id],
       category_id: purchase_params[:category_id],
       price: purchase_params[:price])
 
@@ -30,7 +30,7 @@ class PurchasesController < ApplicationController
   # PATCH/PUT /purchases/1
   def update
     if @purchase.update(
-      title: purchase_params[:title],
+      purchase_name_id: purchase_params[:purchase_name_id],
       category_id: purchase_params[:category_id],
       price: purchase_params[:price])
       render json: @purchase
@@ -47,9 +47,6 @@ class PurchasesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_purchase
-      #@purchase = Purchase.find(params[:attributes][])
-
-
       @purchase = Purchase.find(params[:id])
     end
 
@@ -58,7 +55,6 @@ class PurchasesController < ApplicationController
       params
         .require(:data)
           .require(:attributes)
-            .permit(:title, :price, :category_id)
-      #params.require(:purchase).permit(:category_id, :price)
+            .permit(:purchase_name_id, :price, :category_id)
     end
 end
