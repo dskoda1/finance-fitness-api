@@ -52,8 +52,8 @@ class ActiveSupport::TestCase
     assert purchase.persisted?
     return purchase
   end
-  def create_purchase_name(user)
-    pname = PurchaseName.create!(text: "deli",
+  def create_purchase_name(user, text = "deli")
+    pname = PurchaseName.create!(text: text,
                                  user_id: user.id)
     assert pname.persisted?
     return pname

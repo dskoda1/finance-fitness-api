@@ -98,21 +98,30 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
       params: {
         category: {
           name: @category.name,
-          user_id: @category.user_id
+          user_id: @user.id
           }
         },
       headers: @header
     assert_response 200
   end
   test "update should fail category" do
+    post categories_url,
+    params: {
+      category: {
+        name: 'a new category',
+        user_id: @user.id
+        }
+      },
+    headers: @header
     patch category_url(@category),
       params: {
         category: {
-          name: @category.name
+          name: 'a new category',
+          user_id: @user.id
           }
         },
       headers: @header
-    assert_response 200
+    assert_response :unprocessable_entity
   end
 
   test "should destroy category" do
