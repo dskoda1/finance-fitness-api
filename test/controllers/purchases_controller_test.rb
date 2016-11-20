@@ -22,14 +22,31 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
             attributes: {
               category_id: @category.id,
               purchase_name_id: @purchase_name.id,
+              price: @purchase.price 
+            },
+            type: 'purchase'
+          }
+        },
+        headers: @header
+    end
+    assert_response 201
+  end
+  test "should fail purchase" do
+    assert_difference('Purchase.count') do
+      post purchases_url,
+        params: {
+          data:{
+            attributes: {
+              category_id: @category.id,
+              purchase_name_id: @purchase_name.id,
               price: @purchase.price },
               type: 'purchase'}
             },
         headers: @header
     end
-
     assert_response 201
   end
+
 
   test "should show purchase" do
     get purchase_url(@purchase), headers: @header

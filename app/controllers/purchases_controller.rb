@@ -15,10 +15,7 @@ class PurchasesController < ApplicationController
 
   # POST /purchases
   def create
-    @purchase = Purchase.new(
-      purchase_name_id: purchase_params[:purchase_name_id],
-      category_id: purchase_params[:category_id],
-      price: purchase_params[:price])
+    @purchase = Purchase.new(purchase_params)
 
     if @purchase.save
       render json: @purchase, status: :created, location: @purchase
@@ -29,10 +26,7 @@ class PurchasesController < ApplicationController
 
   # PATCH/PUT /purchases/1
   def update
-    if @purchase.update(
-      purchase_name_id: purchase_params[:purchase_name_id],
-      category_id: purchase_params[:category_id],
-      price: purchase_params[:price])
+    if @purchase.update(purchase_params)
       render json: @purchase
     else
       render json: @purchase.errors, status: :unprocessable_entity

@@ -47,7 +47,8 @@ class PurchaseNamesController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def purchase_name_params
       params
-        .require(:purchase_name)
-          .permit(:text, :user_id)
+        .require(:data)
+          .require(:attributes)
+            .permit(:text, :user_id)
     end
 end

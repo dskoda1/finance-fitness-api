@@ -38,11 +38,14 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Category.count') do
       post categories_url,
       params: {
-        category: {
-          name: 'a new category',
-          user_id: @category.user_id
-          }
-        },
+        data:{
+          attributes: {
+            name: 'a new category',
+            user_id: @category.user_id
+          },
+          type: 'category'
+        }
+      },
       headers: @header
     end
     assert_response 201
@@ -51,22 +54,28 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Category.count') do
       post categories_url,
       params: {
-        category: {
-          name: 'a new category',
-          user_id: @category.user_id
-          }
-        },
+        data:{
+          attributes: {
+            name: 'a new category',
+            user_id: @category.user_id
+          },
+          type: 'category'
+        }
+      },
       headers: @header
     end
     assert_response 201
     # Second one
     post categories_url,
     params: {
-      category: {
-        name: 'a new category',
-        user_id: @category.user_id
-        }
-      },
+      data:{
+        attributes: {
+          name: 'a new category',
+          user_id: @category.user_id
+        },
+        type: 'category'
+      }
+    },
     headers: @header
     assert_response 422
   end
@@ -95,31 +104,40 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
 
   test "should update category" do
     patch category_url(@category),
-      params: {
-        category: {
+    params: {
+      data:{
+        attributes: {
           name: @category.name,
-          user_id: @user.id
-          }
+          user_id: @category.user_id
         },
-      headers: @header
+        type: 'category'
+      }
+    },
+    headers: @header
     assert_response 200
   end
   test "update should fail category" do
     post categories_url,
     params: {
-      category: {
-        name: 'a new category',
-        user_id: @user.id
-        }
-      },
+      data:{
+        attributes: {
+          name: 'a new category',
+          user_id: @category.user_id
+        },
+        type: 'category'
+      }
+    },
     headers: @header
     patch category_url(@category),
       params: {
-        category: {
-          name: 'a new category',
-          user_id: @user.id
-          }
-        },
+        data:{
+          attributes: {
+            name: 'a new category',
+            user_id: @category.user_id
+          },
+          type: 'category'
+        }
+      },
       headers: @header
     assert_response :unprocessable_entity
   end
